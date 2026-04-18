@@ -16,9 +16,11 @@ fn setup() -> (
     env.mock_all_auths();
     let admin = Address::generate(&env);
     let collector = Address::generate(&env);
-    let token_id = env.register_stellar_asset_contract(admin.clone());
+    let token_id = env
+        .register_stellar_asset_contract_v2(admin.clone())
+        .address();
     let token_sa = StellarAssetClient::new(&env, &token_id);
-    let contract_id = env.register_contract(None, RiverWarriorContract);
+    let contract_id = env.register(RiverWarriorContract, ());
     let client = RiverWarriorContractClient::new(&env, &contract_id);
     client.initialize(&admin, &token_id, &10_000_000_i128);
     token_sa.mint(&contract_id, &1_000_000_000_i128);
@@ -35,7 +37,7 @@ fn test_disburse_reward_happy_path() {
     assert_eq!(
         after - before,
         10_000_000_i128,
-        "Collector should receive exactly 1 USDC (7 decimals test asset uses standard 7?)"
+        "Collector should receive bounty amount (10_000_000 stroops in test setup)"
     );
 }
 
@@ -64,9 +66,11 @@ fn test_total_disbursed_state() {
 fn test_unauthorized_disburse() {
     let env2 = Env::default();
     let fake_admin = Address::generate(&env2);
-    let token_id2 = env2.register_stellar_asset_contract(fake_admin.clone());
+    let token_id2 = env2
+        .register_stellar_asset_contract_v2(fake_admin.clone())
+        .address();
     let token_sa2 = StellarAssetClient::new(&env2, &token_id2);
-    let contract_id2 = env2.register_contract(None, RiverWarriorContract);
+    let contract_id2 = env2.register(RiverWarriorContract, ());
     let client2 = RiverWarriorContractClient::new(&env2, &contract_id2);
     client2.initialize(&fake_admin, &token_id2, &10_000_000_i128);
     token_sa2.mint(&contract_id2, &1_000_000_000_i128);

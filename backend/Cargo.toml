@@ -1,6 +1,20 @@
 [package]
 name = "backend"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+description = "River Warrior API — AI gate + optional Stellar CLI disbursement"
 
 [dependencies]
+anyhow = "1"
+axum = { version = "0.8", features = ["multipart"] }
+base64 = "0.22"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal", "process"] }
+tower-http = { version = "0.6", features = ["cors", "trace", "limit"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[lints.rust]
+unsafe_code = "forbid"

@@ -10,7 +10,7 @@
 
 River Warrior compensates informal waste collectors for river cleanup by combining **photo submission**, **Vision AI verification**, and **Soroban smart contract USDC disbursement** to a Stellar wallet. Stellar is used for low fees, fast finality, and trustless payout execution.
 
-**Implementation truth:** This repository currently provides a **scaffold** (Vite/React client, minimal Rust backend binary, placeholder `counter` library). It does **not** yet implement the Soroban contract, AI backend, or wallet integration described in the technical PDF. This PRD states **target** behavior and **current** behavior separately; full capability is defined in [`river_warrior_verification_matrix.md`](river_warrior_verification_matrix.md) and reached via [`river_warrior_gap_remediation.md`](river_warrior_gap_remediation.md).
+**Implementation truth:** The repo now includes a **Soroban River Warrior contract** ([`contracts/river_warrior`](../contracts/river_warrior)), an **HTTP backend** with optional OpenAI vision and optional Stellar CLI disbursement ([`backend`](../backend)), and a **mobile-first submit UI** ([`client`](../client)). **Live testnet payouts** still require you to deploy and fund the contract, set env secrets, and install the Stellar CLI (`USE_STELLAR_CLI=1`). This PRD still separates **target** behavior from **operational** checklist items in [`river_warrior_verification_matrix.md`](river_warrior_verification_matrix.md) and [`river_warrior_gap_remediation.md`](river_warrior_gap_remediation.md).
 
 ---
 
@@ -154,11 +154,12 @@ This section maps **repository state** to requirements (see also [`river_warrior
 
 | Area | Path / artifact | Status vs target |
 |------|------------------|------------------|
-| Soroban contract | [`contracts/counter/`](../contracts/counter/) | **Missing** — library `add()` only; no `soroban-sdk`, no `#[contractimpl]` |
-| Backend | [`backend/src/main.rs`](../backend/src/main.rs) | **Missing** — prints hello world; no HTTP, no AI, no Soroban invoke |
-| Frontend | [`client/src/App.tsx`](../client/src/App.tsx) | **Missing** — Vite/React template; no wallet, photo, or chain flow |
-| Tests | `contracts/counter` unit test for `add` | **Partial** — proves Rust toolchain only, not River Warrior |
-| Docs / context | `contexts/*.pdf` | **Implemented** — product + technical intent documented |
+| Soroban contract | [`contracts/river_warrior/`](../contracts/river_warrior/) | **Implemented** — `initialize`, `disburse_reward`, `set_bounty`, getters, events; five unit tests |
+| Backend | [`backend/`](../backend/) | **Implemented** — `POST /api/submit`, idempotency cache, optional OpenAI, optional CLI invoke |
+| Frontend | [`client/`](../client/) | **Implemented** — address + photo + idempotency; dev proxy to API |
+| On-chain E2E | deploy + fund + trustline + `USE_STELLAR_CLI` | **Partial** — documented; operator must run on testnet |
+| Legacy sample | [`contracts/counter/`](../contracts/counter/) | **Non-production** — unrelated `add()` demo crate |
+| Docs / context | `contexts/*.md`, `contexts/*.pdf` | **Implemented** |
 
 **Classification legend:** *Implemented* = meets REQ in production-quality form; *Partial* = exists but insufficient; *Missing* = not present.
 
