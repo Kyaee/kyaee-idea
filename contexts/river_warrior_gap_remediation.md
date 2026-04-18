@@ -2,7 +2,7 @@
 
 **Purpose:** Phased plan from current repository scaffold to full River Warrior capability aligned with [`river_warrior_prd_master.md`](river_warrior_prd_master.md) and verifiable via [`river_warrior_verification_matrix.md`](river_warrior_verification_matrix.md).
 
-**Current baseline:** `contracts/counter` is a plain Rust library (`add` + one test). `backend` is hello-world. `client` is Vite/React template. No Soroban SDK, no deployable contract, no AI or wallet flow.
+**Current baseline:** [`contracts/river_warrior`](../contracts/river_warrior) is the Soroban implementation (with unit tests). [`backend`](../backend) exposes `POST /api/submit` with optional OpenAI and optional Stellar CLI disbursement. [`client`](../client) is the River Warrior UI. **GAP-4** (testnet E2E evidence, leaderboard) remains operator-driven; see root [README.md](../README.md).
 
 ---
 

@@ -75,9 +75,10 @@ These verify **today’s** codebase only; they do **not** prove River Warrior ca
 
 | ID | Scope | Command / action | Pass criteria | Evidence | Current |
 |----|-------|------------------|---------------|----------|---------|
-| SMOKE-R-01 | Counter lib | `cd contracts/counter && cargo test` | All tests pass | Terminal output | **Runnable** |
-| SMOKE-R-02 | Backend binary | `cd backend && cargo build` | Compiles | Terminal output | **Runnable** |
-| SMOKE-R-03 | Client | `cd client && npm run build && npm run lint` | Exit 0 | Terminal output | **Runnable** |
+| SMOKE-R-01 | River Warrior contract | `cd contracts/river_warrior && cargo test` | 5 tests pass | Terminal output | **Runnable** |
+| SMOKE-R-02 | Counter lib (legacy) | `cd contracts/counter && cargo test` | All tests pass | Terminal output | **Runnable** |
+| SMOKE-R-03 | Backend binary | `cd backend && cargo build` | Compiles | Terminal output | **Runnable** |
+| SMOKE-R-04 | Client | `cd client && npm run build && npm run lint` | Exit 0 | Terminal output | **Runnable** |
 
 ---
 
